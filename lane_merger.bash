@@ -21,7 +21,7 @@ OUTDIR=~/output
 HELP="false"
 
 function exit_with_bad_args {
-    echo "Usage: bash lane_merger.bash optional args: --dir <input dir> --lanes <number of lanes> --output <output dir> "
+    echo "Usage: bash lane_merger.bash optional args: --dir <input dir> --ID <Run ID> --lanes <number of lanes> --output <output dir> "
     echo "Invalid arguments provided" >&2
     exit # this stops the terminal closing when run as source
 }
@@ -29,15 +29,19 @@ function exit_with_bad_args {
 
 
 #Set the possible input options
-options=$(getopt -o '' -l dir: -l lanes: -l output: -l help -- "$@") || exit_with_bad_args
+options=$(getopt -o '' -l input: -l ID: -l lanes: -l output: -l help -- "$@") || exit_with_bad_args
 
 #Get the inputs
 eval set -- "$options"
 while true; do
     case "$1" in
-        --dir)
+        --input)
             shift
             DIR="$1"
+            ;;
+        --ID)
+            shift
+            RUNID="$1"
             ;;
         --lanes)
             shift
@@ -77,6 +81,7 @@ if [[ $HELP == "true" ]]; then
     echo "--dir   The directory where the fastq files are located, default is ~/data"
     echo "--lanes The number of lanes to merge across, default is 2"
     echo "--output Change the output directory, default is ~/output"
+    echo "--ID Change the ouput folder name"
     echo
     echo "This script is run locally, it is not set up to run on the cluster"
     echo  "The script can currently handle up to 4 lanes"
@@ -101,13 +106,13 @@ done
 for base in "${!FILES[@]}"; do
     echo "${base}"
 
-    if [[ $lanes == 2 ]]; then
+    if [[ $LANES == 2 ]]; then
     cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz > ${OUTDIR}/${base}_R1_merged.fastq.gz
     cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz > ${OUTDIR}/${base}_R2_merged.fastq.gz
-    elif [[ $lanes == 3 ]]; then
+    elif [[ $LANES == 3 ]]; then
     cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz > ${OUTDIR}/${base}_R1_merged.fastq.gz
     cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz > ${OUTDIR}/${base}_R2_merged.fastq.gz
-    elif [[ $lanes == 4 ]]; then
+    elif [[ $LANES == 4 ]]; then
     cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_R1_merged.fastq.gz
     cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_R2_merged.fastq.gz
     fi
