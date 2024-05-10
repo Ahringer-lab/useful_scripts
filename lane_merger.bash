@@ -107,13 +107,13 @@ for base in "${!FILES[@]}"; do
     echo "${base}"
 
     if [[ $LANES == 2 ]]; then
-    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz > ${OUTDIR}/${base}_R1_merged.fastq.gz
-    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz > ${OUTDIR}/${base}_R2_merged.fastq.gz
+    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
+    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
     elif [[ $LANES == 3 ]]; then
-    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz > ${OUTDIR}/${base}_R1_merged.fastq.gz
-    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz > ${OUTDIR}/${base}_R2_merged.fastq.gz
+    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
+    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
     elif [[ $LANES == 4 ]]; then
-    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_R1_merged.fastq.gz
-    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_R2_merged.fastq.gz
+    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
+    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
     fi
 done
