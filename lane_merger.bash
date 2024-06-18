@@ -19,6 +19,7 @@ LANES=2
 RUNID="Merged-$(date '+%Y-%m-%d-%R')"
 OUTDIR=~/output
 HELP="false"
+LOGFILE=${RUNID}_Log.csv
 
 function exit_with_bad_args {
     echo "Usage: bash lane_merger.bash optional args: --dir <input dir> --ID <Run ID> --lanes <number of lanes> --output <output dir> "
@@ -90,6 +91,9 @@ fi
 
 mkdir $OUTDIR
 
+echo \#Run ID,${RUNID} > $LOGFILE
+echo \# >> $LOGFILE
+
 # Make array to store fastq name
 declare -A FILES
 
@@ -116,4 +120,10 @@ for base in "${!FILES[@]}"; do
     cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
     cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
     fi
+    
+    echo ${base}, >> $LOGFILE
+    R1count=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
+    R2count=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
+    echo ${R1count}, >> $LOGFILE
+    echo ${R2count}, >> $LOGFILE
 done
