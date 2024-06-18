@@ -64,7 +64,7 @@ done
 
 cd $DIR
 OUTDIR=${OUTDIR}/${RUNID}
-LOGFILE=${OUTDIR}/${RUNID}_Log.csv
+LOGFILE=${OUTDIR}/${RUNID}.log
 
 #Check the lane numbers
 if [[ $LANES < 2 ]]; then
