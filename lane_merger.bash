@@ -17,11 +17,11 @@
 DIR=~/data
 LANES=2
 RUNID="Merged-$(date '+%Y-%m-%d-%R')"
-OUTDIR=~/output
+OUTDIR=~/out
 HELP="false"
 
 function exit_with_bad_args {
-    echo "Usage: bash lane_merger.bash optional args: --dir <input dir> --ID <Run ID> --lanes <number of lanes> --output <output dir> "
+    echo "Usage: bash lane_merger.bash optional args: --dir <input dir> --id <Run ID> --lanes <number of lanes> --output <output dir> "
     echo "Invalid arguments provided" >&2
     exit # this stops the terminal closing when run as source
 }
@@ -29,7 +29,7 @@ function exit_with_bad_args {
 
 
 #Set the possible input options
-options=$(getopt -o '' -l input: -l ID: -l lanes: -l output: -l help -- "$@") || exit_with_bad_args
+options=$(getopt -o '' -l input: -l id: -l lanes: -l output: -l help -- "$@") || exit_with_bad_args
 
 #Get the inputs
 eval set -- "$options"
@@ -39,7 +39,7 @@ while true; do
             shift
             DIR="$1"
             ;;
-        --ID)
+        --id)
             shift
             RUNID="$1"
             ;;
