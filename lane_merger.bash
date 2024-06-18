@@ -19,7 +19,6 @@ LANES=2
 RUNID="Merged-$(date '+%Y-%m-%d-%R')"
 OUTDIR=~/output
 HELP="false"
-LOGFILE=${RUNID}_Log.csv
 
 function exit_with_bad_args {
     echo "Usage: bash lane_merger.bash optional args: --dir <input dir> --ID <Run ID> --lanes <number of lanes> --output <output dir> "
@@ -65,6 +64,7 @@ done
 
 cd $DIR
 OUTDIR=${OUTDIR}/${RUNID}
+LOGFILE=${OUTDIR}/${RUNID}_Log.csv
 
 #Check the lane numbers
 if [[ $LANES < 2 ]]; then
@@ -91,6 +91,7 @@ fi
 
 mkdir $OUTDIR
 
+#Make the log file, N.B log file only goes to 2 lanes at present
 echo \#Run ID,${RUNID} > $LOGFILE
 echo \# >> $LOGFILE
 
@@ -121,9 +122,20 @@ for base in "${!FILES[@]}"; do
     cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
     fi
     
+    #Add read numbers to log file
     echo ${base}, >> $LOGFILE
-    R1count=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
-    R2count=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
-    echo ${R1count}, >> $LOGFILE
-    echo ${R2count}, >> $LOGFILE
+    R1count_unmerged1=$(( $(gunzip -c ${base}_L001_R1_001.fastq.gz | wc -l)/4|bc ))
+    R1count_unmerged2=$(( $(gunzip -c ${base}_L001_R2_001.fastq.gz | wc -l)/4|bc ))
+    R2count_unmerged1=$(( $(gunzip -c ${base}_L002_R1_001.fastq.gz | wc -l)/4|bc ))
+    R2count_unmerged2=$(( $(gunzip -c ${base}_L002_R2_001.fastq.gz | wc -l)/4|bc ))
+    R1count_merged=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
+    R2count_merged=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
+    echo "Original counts" >> $LOGFILE
+    echo ${R1count_unmerged1}, >> $LOGFILE
+    echo ${R1count_unmerged2}, >> $LOGFILE
+    echo ${R2count_unmerged1}, >> $LOGFILE
+    echo ${R2count_unmerged2}, >> $LOGFILE
+    echo "Merged Counts"
+    echo ${R1count_merged}, >> $LOGFILE
+    echo ${R2count_merged}, >> $LOGFILE
 done
