@@ -111,23 +111,24 @@ done
 for base in "${!FILES[@]}"; do
     echo "${base}"
 
+    mkdir ${OUTDIR}/${base}/
     if [[ $LANES == 2 ]]; then
-    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
-    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
+    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R1_001.fastq.gz
+    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R2_001.fastq.gz
     elif [[ $LANES == 3 ]]; then
-    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
-    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
+    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R1_001.fastq.gz
+    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R2_001.fastq.gz
     elif [[ $LANES == 4 ]]; then
     cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R1_001.fastq.gz
     cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R2_001.fastq.gz
     fi
     
     #Add read numbers to log file
-    echo ${base}, >> $LOGFILE
-    echo ${base}_L001_R1_001.fastq.gz
-    echo ${base}_L001_R1_001.fastq.gz
-    echo ${base}_L002_R1_001.fastq.gz
-    echo ${base}_L002_R1_001.fastq.gz
+    echo ${base} >> $LOGFILE
+    echo ${base}_L001_R1_001.fastq.gz  >> $LOGFILE
+    echo ${base}_L001_R1_001.fastq.gz  >> $LOGFILE
+    echo ${base}_L002_R1_002.fastq.gz  >> $LOGFILE
+    echo ${base}_L002_R1_002.fastq.gz  >> $LOGFILE
     R1count_unmerged1=$(( $(gunzip -c ${base}_L001_R1_001.fastq.gz | wc -l)/4|bc ))
     R1count_unmerged2=$(( $(gunzip -c ${base}_L001_R2_001.fastq.gz | wc -l)/4|bc ))
     R2count_unmerged1=$(( $(gunzip -c ${base}_L002_R1_001.fastq.gz | wc -l)/4|bc ))
