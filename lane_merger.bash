@@ -124,6 +124,10 @@ for base in "${!FILES[@]}"; do
     
     #Add read numbers to log file
     echo ${base}, >> $LOGFILE
+    echo ${base}_L001_R1_001.fastq.gz
+    echo ${base}_L001_R1_001.fastq.gz
+    echo ${base}_L002_R1_001.fastq.gz
+    echo ${base}_L002_R1_001.fastq.gz
     R1count_unmerged1=$(( $(gunzip -c ${base}_L001_R1_001.fastq.gz | wc -l)/4|bc ))
     R1count_unmerged2=$(( $(gunzip -c ${base}_L001_R2_001.fastq.gz | wc -l)/4|bc ))
     R2count_unmerged1=$(( $(gunzip -c ${base}_L002_R1_001.fastq.gz | wc -l)/4|bc ))
