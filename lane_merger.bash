@@ -118,8 +118,8 @@ for base in "${!FILES[@]}"; do
     cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
     cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
     elif [[ $LANES == 4 ]]; then
-    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R1_001.fastq.gz
-    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}_merged_R2_001.fastq.gz
+    cat ${base}_L001_R1_001.fastq.gz ${base}_L002_R1_001.fastq.gz ${base}_L003_R1_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R1_001.fastq.gz
+    cat ${base}_L001_R2_001.fastq.gz ${base}_L002_R2_001.fastq.gz ${base}_L003_R2_001.fastq.gz ${base}_L004_R2_001.fastq.gz > ${OUTDIR}/${base}/${base}_merged_R2_001.fastq.gz
     fi
     
     #Add read numbers to log file
@@ -140,4 +140,6 @@ for base in "${!FILES[@]}"; do
     echo "Merged Counts">> $LOGFILE
     echo ${R1count_merged}, >> $LOGFILE
     echo ${R2count_merged}, >> $LOGFILE
+
+    mv ${base}*.gz ${OUTDIR}/${base}/
 done
