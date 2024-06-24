@@ -133,8 +133,8 @@ for base in "${!FILES[@]}"; do
     R1count_unmerged2=$(( $(gunzip -c ${base}_L001_R2_001.fastq.gz | wc -l)/4|bc ))
     R2count_unmerged1=$(( $(gunzip -c ${base}_L002_R1_001.fastq.gz | wc -l)/4|bc ))
     R2count_unmerged2=$(( $(gunzip -c ${base}_L002_R2_001.fastq.gz | wc -l)/4|bc ))
-    R1count_merged=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
-    R2count_merged=$(( $(gunzip -c ${OUTDIR}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
+    R1count_merged=$(( $(gunzip -c ${OUTDIR}/${base}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
+    R2count_merged=$(( $(gunzip -c ${OUTDIR}/${base}/${base}_merged_R1_001.fastq.gz | wc -l)/4|bc ))
     echo "Original counts" >> $LOGFILE
     echo ${R1count_unmerged1},${R1count_unmerged2}, >> $LOGFILE
     echo ${R2count_unmerged1},${R2count_unmerged2}, >> $LOGFILE
